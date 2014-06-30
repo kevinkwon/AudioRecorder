@@ -316,6 +316,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "71C5FB1D-2A3B-4EA4-9F92-CC2371860805";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -347,6 +348,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				PROVISIONING_PROFILE = "71C5FB1D-2A3B-4EA4-9F92-CC2371860805";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -437,6 +439,7 @@
 				4F3D869819610A0C001D8332 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4F3D869919610A0C001D8332 /* Build configuration list for PBXNativeTarget "AudioRecorderTests" */ = {
 			isa = XCConfigurationList;
@@ -445,6 +448,7 @@
 				4F3D869B19610A0C001D8332 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
