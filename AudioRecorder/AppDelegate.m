@@ -32,6 +32,9 @@
     // 윈도우를 화면에 표시함
     [self.window makeKeyAndVisible];
     
+    // 상단 StatusBar 숨김
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
+    
     // 이건 그냥 YES해줘야함
     return YES;
 }
