@@ -19,6 +19,12 @@
 		4F3D868919610A0C001D8332 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F3D867119610A0B001D8332 /* UIKit.framework */; };
 		4F3D869119610A0C001D8332 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4F3D868F19610A0C001D8332 /* InfoPlist.strings */; };
 		4F3D869319610A0C001D8332 /* AudioRecorderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3D869219610A0C001D8332 /* AudioRecorderTests.m */; };
+		4F4C239519638A770023C089 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F4C239419638A770023C089 /* AVFoundation.framework */; };
+		4F4C239719638A7E0023C089 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F4C239619638A7E0023C089 /* MessageUI.framework */; };
+		4F4C239919638A910023C089 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F4C239819638A910023C089 /* libsqlite3.0.dylib */; };
+		4F4C239E19638B070023C089 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F4C239D19638B070023C089 /* RootViewController.m */; };
+		4F4C23A0196392EE0023C089 /* RootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F4C239F196392EE0023C089 /* RootViewController.xib */; };
+		4F72221C19610BB700F10A28 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F72221B19610BB700F10A28 /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +54,13 @@
 		4F3D868E19610A0C001D8332 /* AudioRecorderTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AudioRecorderTests-Info.plist"; sourceTree = "<group>"; };
 		4F3D869019610A0C001D8332 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4F3D869219610A0C001D8332 /* AudioRecorderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AudioRecorderTests.m; sourceTree = "<group>"; };
+		4F4C239419638A770023C089 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4F4C239619638A7E0023C089 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		4F4C239819638A910023C089 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		4F4C239C19638B070023C089 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
+		4F4C239D19638B070023C089 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
+		4F4C239F196392EE0023C089 /* RootViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RootViewController.xib; sourceTree = "<group>"; };
+		4F72221B19610BB700F10A28 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +68,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F4C239919638A910023C089 /* libsqlite3.0.dylib in Frameworks */,
+				4F4C239719638A7E0023C089 /* MessageUI.framework in Frameworks */,
+				4F4C239519638A770023C089 /* AVFoundation.framework in Frameworks */,
 				4F3D867019610A0B001D8332 /* CoreGraphics.framework in Frameworks */,
 				4F3D867219610A0B001D8332 /* UIKit.framework in Frameworks */,
 				4F3D866E19610A0B001D8332 /* Foundation.framework in Frameworks */,
@@ -77,6 +93,7 @@
 		4F3D866119610A0B001D8332 = {
 			isa = PBXGroup;
 			children = (
+				4F72221B19610BB700F10A28 /* README.md */,
 				4F3D867319610A0B001D8332 /* AudioRecorder */,
 				4F3D868C19610A0C001D8332 /* AudioRecorderTests */,
 				4F3D866C19610A0B001D8332 /* Frameworks */,
@@ -96,6 +113,9 @@
 		4F3D866C19610A0B001D8332 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4F4C239819638A910023C089 /* libsqlite3.0.dylib */,
+				4F4C239619638A7E0023C089 /* MessageUI.framework */,
+				4F4C239419638A770023C089 /* AVFoundation.framework */,
 				4F3D866D19610A0B001D8332 /* Foundation.framework */,
 				4F3D866F19610A0B001D8332 /* CoreGraphics.framework */,
 				4F3D867119610A0B001D8332 /* UIKit.framework */,
@@ -107,6 +127,9 @@
 		4F3D867319610A0B001D8332 /* AudioRecorder */ = {
 			isa = PBXGroup;
 			children = (
+				4F4C239C19638B070023C089 /* RootViewController.h */,
+				4F4C239D19638B070023C089 /* RootViewController.m */,
+				4F4C239F196392EE0023C089 /* RootViewController.xib */,
 				4F3D867C19610A0B001D8332 /* AppDelegate.h */,
 				4F3D867D19610A0B001D8332 /* AppDelegate.m */,
 				4F3D867F19610A0B001D8332 /* Images.xcassets */,
@@ -219,6 +242,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F72221C19610BB700F10A28 /* README.md in Resources */,
+				4F4C23A0196392EE0023C089 /* RootViewController.xib in Resources */,
 				4F3D867819610A0B001D8332 /* InfoPlist.strings in Resources */,
 				4F3D868019610A0B001D8332 /* Images.xcassets in Resources */,
 			);
@@ -241,6 +266,7 @@
 			files = (
 				4F3D867E19610A0B001D8332 /* AppDelegate.m in Sources */,
 				4F3D867A19610A0B001D8332 /* main.m in Sources */,
+				4F4C239E19638B070023C089 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

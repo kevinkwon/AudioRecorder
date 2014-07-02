@@ -12,10 +12,27 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    /* 책과는 다르게 MainWindow.xib를 만들지 않고 코딩으로 뷰를 붙여줌 */
+    
+    
+    // 윈도우를 하나 만들어줌
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     // Override point for customization after application launch.
+    
+    // 첫 화면이 될 rootViewController, xib로 초기화해줌
+    self.rootViewController = [[RootViewController alloc]initWithNibName:@"RootViewController" bundle:nil];
+    
+    // 윈도우의 rootViewController프로퍼티에 첫 화면을 지정해줌.
+    self.window.rootViewController = self.rootViewController;
+    
+    // 윈도우의 기본이 되는 배경 색임
     self.window.backgroundColor = [UIColor whiteColor];
+
+    // 윈도우를 화면에 표시함
     [self.window makeKeyAndVisible];
+    
+    // 이건 그냥 YES해줘야함
     return YES;
 }
 
