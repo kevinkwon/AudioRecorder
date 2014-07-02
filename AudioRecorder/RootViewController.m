@@ -78,13 +78,56 @@
     // 화면전환 시작
     [UIView beginAnimations:nil context:NULL]; // 애니메이션 정의 시작
     [UIView setAnimationDuration:1.0];
-    [UIView setAnimation]
+    [UIView setAnimationTransition:recordView.subviews?UIViewAnimationTransitionFlipFromRight:UIViewAnimationTransitionFlipFromLeft
+                           forView:self.view
+                             cache:YES]; // 화면전환 효과 설정
     
-    
+    // 슈퍼뷰에서 제거하여 더이상 화면에 나타나지 않게 합니다.
+    if (recordView.superview != nil) {
+        [recordView removeFromSuperview];
+        [self.view addSubview:audioRecorderInfoView];
+    }
+    else {
+        [audioRecorderInfoView removeFromSuperview];
+        [self.view insertSubview:recordView belowSubview:_infoButton];
+    }
+    [UIView commitAnimations]; // 에니메이션 종료
 }
+
 - (IBAction)audioListClick:(id)sender
 {
+    if (_recordListViewController == nil) {
+        RecordListViewController *viewController = [[RecordListViewController alloc]initWithNibName:@"RecordListViewController" bundle:nil];
+        self.recordListViewController = viewController;
+        // [viewController release];
+    }
     
+    UIView *recordView = _recordListViewController.view; // 녹음 리스트 뷰를 지역변수로 선언
+    UIView *recordListView = _recordListViewController.view; // 녹음기 앱정보 뷰를 지역변수로 선언
+
+    // 화면 전환 설정
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:1.0];
+    [UIView setAnimationTransition:recordView.subviews?UIViewAnimationTransitionCurlUp:UIViewAnimationTransitionCurlDown
+                           forView:self.view
+                             cache:YES]; // 화면전환 효과 설정
+    
+    if (recordView.superview != nil) {
+        [recordView removeFromSuperview];
+        [self.view addSubview:recordListView];
+        
+        [self.recordListViewController viewDidAppear:YES];
+        [self.recordViewController viewDidAppear:NO];
+    }
+    else {
+        [recordListView removeFromSuperview];
+        [self.view insertSubview:recordView belowSubview:_infoButton];
+        [self.recordListViewController viewDidAppear:NO];
+        [self.recordViewController viewDidAppear:YES];
+    }
+    
+    [UIView commitAnimations]; // 애니메이션 종료
+
 }
 
 
