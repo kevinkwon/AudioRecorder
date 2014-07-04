@@ -35,8 +35,29 @@
     // 상단 StatusBar 숨김
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:YES];
     
+    [self copyOfDataBaseIfNeeded]; // 데이터 베이스르 파일을 복사한다.
+    
     // 이건 그냥 YES해줘야함
     return YES;
+}
+
+- (BOOL)copyOfDataBaseIfNeeded
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES); // Documents 폴더 위치를 구한다.
+    NSString *documentDirectory = paths[0];
+    
+    NSString *myPath = [documentDirectory stringByAppendingPathComponent:@"RecordDB.sqlite"];
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL exist = [fileManager fileExistsAtPath:myPath]; // 파일이 존재하는지 체크
+    
+    if (exist) {
+        NSLog(@"DB가 존재합니다.");
+        return YES;
+    }
+    
+    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"RecordDB.sqlite"];
+    return [fileManager copyItemAtPath:defaultDBPath toPath:myPath error:nil];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

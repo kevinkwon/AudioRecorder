@@ -7,6 +7,9 @@
 //
 
 #import "RecordListViewController.h"
+#import "UIMemoListCell.h"
+
+#define ROW_HEIGHT 65
 
 @interface RecordListViewController ()
 
@@ -27,6 +30,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    pDataBase = [[RecordDataBase alloc] init];
+    [pListView setRowHeight:ROW_HEIGHT]; // 셀의 높이 지정
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -35,4 +42,96 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)ReloadRecordList
+{
+    [pDataBase getRecordList]; // 데이터베이스 조회
+    [pListView reloadData]; // 테이블뷰 새로 고침
+}
+
+#pragma mark - UITableView Delegate Method
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [pDataBase.memoListArray count]; // 데이터베이스에 저장된 녹음 파일 개수 리턴
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"MemoListCell"; // 재활용을 위한 셀 식별자
+    
+    UIMemoListCell *cell = (UIMemoListCell *)[tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    
+    if (!cell) {
+        NSArray *arr = [[NSBundle mainBundle] loadNibNamed:@"UIMemoListCell" owner:nil options:nil];
+        cell = [arr objectAtIndex:0];
+    }
+    
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    NSString *pSeq = [[pDataBase.memoListArray objectAtIndex:indexPath.row] objectForKey:@"SEQ"];
+    
+    int pRecordingTime = [(NSNumber *)[[pDataBase.memoListArray objectAtIndex:indexPath.row] objectForkey:@"RecordingTM"] intValue];
+    
+    cell.dateLabel.text = [NSString stringWithFormat:@"%@-%@-%@",
+                           [pSeq substringWithRange:NSMakeRange(0, 4)],
+                           [pSeq substringWithRange:NSMakeRange(4, 2)],
+                           [pSeq substringWithRange:NSMakeRange(6, 2)]];
+    cell.timeLabel.text = [NSString stringWithFormat:@"%@시 %@분 %@초",
+                           [pSeq substringWithRange:NSMakeRange(8, 2)],
+                           [pSeq substringWithRange:NSMakeRange(10, 2)],
+                           [pSeq substringWithRange:NSMakeRange(12, 2)]];
+    
+    cell.recordingTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d:%02d",
+                                    (pRecordingTime/3600),
+                                    (pRecordingTime % 3600) / 60,
+                                    (pRecordingTime % 60)];
+    return cell;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *pSeq = [[pDateBase.memoListArray objectAtIndex:indexPath.row] objectForKey:@"SEQ"];
+    [pDataBase deleteRecordData:pSEQ];// 데이터 베이스의 삭제
+    [pDataBase.memoListArray removeObjectAtIndex:indexPath.row];
+    [pListView deleteRowAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+#pragma mark - AVAudioPlayer Delegate Methods
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    playerButton.title = @"듣기";
+}
+
+- (IBAction)AudioPlayingClick:(id)sender
+{
+    int index = [[pListView indexPathForSelectedRow] row];
+    if (pDataBase.memoListArray.count == 0)
+        return;
+    
+    NSString *pRecordFileName = [[pDataBase.memoListArray objectAtIndex:index] objectForKey:@"RecordFileNM"];
+    
+    if (pAudioPlayer == nil || !pAudioPlayer.playing)
+    {
+        self.pAudioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:pRecordFileName] error:nil];
+        pAudioPlayer.delegate = self;
+        [pAudioPlayer prepareToPlay];
+        [pAudioPlayer play];
+        playerButton.title = @"멈춤";
+    }
+    else {
+        [pAudioPlayer stop];
+        playerButton.title = @"듣기";
+        //[pAudioPlayer release];
+        pAudioPlayer = nil;
+    }
+}
 @end

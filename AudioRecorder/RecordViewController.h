@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "MeterGaugeView.h"
 
 @interface RecordViewController : UIViewController <AVAudioRecorderDelegate>
 {
@@ -15,11 +16,11 @@
     AVAudioSession *pAudioSession; // AVAudioSession 멤버 변수
     
     IBOutlet UILabel *recordTimeDisplay;
-    IBoutlet MeterGaugeView *pGaugeView;
+    IBOutlet MeterGaugeView *pGaugeView;
     IBOutlet UIBarButtonItem *ListButton;
     
     NSTimer *timer;
-    double plowPassResult; // 녹음레벨
+    double plowPassResults; // 녹음레벨
     RecordDataBase *pDateBase; //데이터베이스 제어 클래스 변수
     
     // 데이터 베이스에 저장하기 위한 정보
