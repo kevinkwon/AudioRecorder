@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface UIMemoListCell : UITableViewCell {
-    IBOutlet UILabel *dateLabel;
-    IBOutlet UILabel *timeLabel;
-    IBOutlet UILabel *recordingTimeLabel;
+    UILabel *_dateLabel;
+    UILabel *_timeLabel;
+    UILabel *_recordingTimeLabel;
 }
 
 @property (nonatomic, strong) IBOutlet UILabel *dateLabel;

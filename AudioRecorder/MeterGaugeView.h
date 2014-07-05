@@ -10,11 +10,11 @@
 
 @interface MeterGaugeView : UIView
 {
-    CGImageRef imgGauge;
-    double value; // 오디오 레벨값을 저장하는 변수
+    CGImageRef _imgGauge;
+    double _value; // 오디오 레벨값을 저장하는 변수
 }
 
-- (void)drawGuageBitmap:(CGContextRef)context;
+- (void)drawGaugeBitmap:(CGContextRef)context;
 @property double value;
 
 @end

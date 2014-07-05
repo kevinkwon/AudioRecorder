@@ -27,12 +27,12 @@
     return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder
+- (id)initWithCoder:(NSCoder *)coder
 {
     self = [super initWithCoder:coder];
     if (self) {
-        UIImage *img = [UIImage imageNamed:@"guage.png"];
-        imgGauge = CGImageRetain(img.CGImage);
+        UIImage *img = [UIImage imageNamed:@"gauge.png"];
+        _imgGauge = CGImageRetain(img.CGImage);
         //[img release];
     }
     return self;
@@ -51,7 +51,7 @@
     int newValue, newValue1, newValue2;
     
     CGContextRef context = UIGraphicsGetCurrentContext(); // 그래픽 컨텍스트
-    [self drawGuageBitmap:context];
+    [self drawGaugeBitmap:context];
     
     if (value >= 0.5) {
         newValue = ENDANGLE * 2 * (value -0.5); // 삼각형 계기침의 좌표를 계산합니다.
@@ -85,14 +85,14 @@
 }
 
 // CTM이전 상태를 저장
-- (void)drawGuageBitmap:(CGContextRef)context // drawGaugeBitmap 메서드
+- (void)drawGaugeBitmap:(CGContextRef)context // drawGaugeBitmap 메서드
 {
 // CTM이전 상태를 저장
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, 0.0, self.bounds.size.height);
     CGContextScaleCTM(context, 1.0, -1.0);
     CGContextClipToRect(context, CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height));
-    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(imgGauge), CGImageGetHeight(imgGauge)), imgGauge);
+    CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(_imgGauge), CGImageGetHeight(_imgGauge)), _imgGauge);
     CGContextRestoreGState(context);
 }
 

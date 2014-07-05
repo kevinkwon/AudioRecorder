@@ -13,10 +13,10 @@
 
 @interface RecordListViewController : UIViewController <AVAudioPlayerDelegate, MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-    RecordDateBase *pDataBase;
-    IBOutlet UITableView *pListView;
-    IBOutlet UIBarButtonItem *playerButton; // 듣기 버튼
-    AVAudioPlayer *pAudioPlayer;
+    RecordDataBase *_pDataBase;
+    IBOutlet UITableView *_pListView;
+    IBOutlet UIBarButtonItem *_playerButton; // 듣기 버튼
+    AVAudioPlayer *_pAudioPlayer;
 }
 
 - (void)ReloadRecordList;

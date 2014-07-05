@@ -14,10 +14,10 @@
 @interface RootViewController : UIViewController
 {
     // property로 했기때문에 생략해도 무방함
-//    RecordViewController *_recordViewController;
-//    AudioRecorderInfo *_audioRecorderInfo;
-//    RecordListViewController *pRecordListViewController;
-//    IBOutlet UIButton *infoButton;
+    RecordViewController *_recordViewController;
+    AudioRecorderInfo *_audioRecorderInfo;
+    RecordListViewController *pRecordListViewController;
+    UIButton *_infoButton;
 }
 
 - (IBAction)recordInfoClick:(id)sender;

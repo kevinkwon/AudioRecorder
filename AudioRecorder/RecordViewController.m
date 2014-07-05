@@ -29,8 +29,8 @@
     // Do any additional setup after loading the view from its nib.
 
     [self SetAudioSession]; // 오디오 동작 설명
-    [recordTimeDisplay setFont:[UIFont fontWithName:@"DBLCDTempBlack" size:40.0]]; // 폰트 설정
-    pDateBase = [[RecordDataBase alloc] init]; // 디비 초기화
+    [_recordTimeDisplay setFont:[UIFont fontWithName:@"DBLCDTempBlack" size:40.0]]; // 폰트 설정
+    _pDataBase = [[RecordDataBase alloc] init]; // 디비 초기화
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,17 +62,17 @@
     {
         if (self.pAudioRecorder.recording) { // 레코딩 중일 경우
             [self.pAudioRecorder stop]; // 녹음을 중지합니다.
-            pGaugeView.value = 0;
+            _pGaugeView.value = 0;
             [[NSFileManager defaultManager] removeItemAtPath:[self.pAudioRecorder.url path] error:nil];
-            [pGaugeView setNeedsDisplay]; // 오디오 레벨을 표시하는 계시판을 다시 그립니다.
+            [_pGaugeView setNeedsDisplay]; // 오디오 레벨을 표시하는 계시판을 다시 그립니다.
             return;
         }
         // [self.pAudioRecorder release];
     }
     if ([self AudioRecordingStart]) // 녹음을 시작합니다.
     {
-        [self ToolBarRecordButtonToogle:1];
-        timer = [NSTimer scheduledTimerWithTimeInterval:0.03f invocation:self repeats:@selector(timerFired) userInfo:nil repeats:YES]; // 타이머를 설정합니다.
+        [self toolbarRecordButtonToogle:1];
+        _timer = [NSTimer scheduledTimerWithTimeInterval:0.03f target:self selector:@selector(timerFired) userInfo:nil repeats:YES]; // 타이머를 설정합니다.
     }
 }
 
@@ -112,7 +112,17 @@
     return YES;
 }
 
-- (NSString *)getAudioFilePath
+- (NSURL *)getAudioFilePath
+{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = [paths objectAtIndex:0];
+    
+    // 파일명을 구하고 파일결로를 합친후 NSURL객체로 변환합니다.
+    NSURL *audioURL = [NSURL fileURLWithPath:[documentDirectory stringByAppendingPathComponent:[self getFileName]]];
+    return audioURL;
+}
+
+- (NSString *)getFileName
 {
     NSDateFormatter *fileNameFormat = [[NSDateFormatter alloc]init];
     [fileNameFormat setDateFormat:@"yyyyMddHHmmss"];
@@ -123,20 +133,21 @@
     return fileName;
 }
 
-- (void)timeFired
+- (void)timerFired
 {
     [self.pAudioRecorder updateMeters];
     double peak = pow(10, (0.05 * [self.pAudioRecorder peakPowerForChannel:0]));
-    plowPassResults = 0.05 * peak + (1.0 - 0.05) *plowPassResults;
+    _plowPassResults = 0.05 * peak + (1.0 - 0.05) * _plowPassResults;
     // 녹음된 사간을 화면에 갱신합니다.
-    recordTimeDisplay.text = [NSString stringWithFormat:@"%@", [self RecordTime:self.pAudioRecorder.currentTime]];
-    pRecodingTime = self.pAudioRecorder.currentTime;
-    pGaugeView.value = plowPassResults;
-    [pGuageView setNeedDisplay]; // 계기판을 갱신합니다.
+    _recordTimeDisplay.text = [NSString stringWithFormat:@"%@", [self recordTime:self.pAudioRecorder.currentTime]];
+    _pRecodingTime = self.pAudioRecorder.currentTime;
+    _pGaugeView.value = _plowPassResults;
+    
+    [_pGaugeView setNeedsDisplay]; // 계기판을 갱신합니다.
 }
 
 // 녹음된 시/분/초를 구합니다.
-- (NSString *)RecordTime:(int)num
+- (NSString *)recordTime:(int)num
 {
     int secs = num % 60; // 녹음시간 : 초
     int min = (num % 3600) / 60; // 녹음시간 : 분
@@ -149,24 +160,24 @@
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
 {
     // 데이터 베이스 저장
-    pRecordSeq = [[recorder.url.path substringFromIndex:[recorder.url.path length] - 18] substringToIndex:14];
-    pRecordFileName = recorder.url.path;
+    _pRecordSeq = [[recorder.url.path substringFromIndex:[recorder.url.path length] - 18] substringToIndex:14];
+    _pRecordFileName = recorder.url.path;
     
-    [pDataBase insertRecordData:pRecordSeq RecordingTM:pRecodingTime RecordFileNM:pRecordFileName];
-    [self ToolbarRecordButtonToogle:0];
+    [_pDataBase insertRecordData:_pRecordSeq RecordingTM:_pRecodingTime RecordFileNM:_pRecordFileName];
+    [self toolbarRecordButtonToogle:0];
     
-    [timer invalidate];
-    timer = nil;
+    [_timer invalidate];
+    _timer = nil;
 }
 
 // 녹음/멈춤 버튼 이미지 토글 처리
-- (void)ToolbarRecordButtonToogle:(int)index
+- (void)toolbarRecordButtonToogle:(int)index
 {
     if (index == 0) {
-        [pRecordButton setImage:[UIImage imageNamed:@"record_on.png"] forState:UIControlStateNormal];
+        [_pRecordButton setImage:[UIImage imageNamed:@"record_on.png"] forState:UIControlStateNormal];
     }
     else {
-        [pRecordButton setImage:[UIImage imageNamed:@"record_off.png"] forState:UIControlStateNormal];
+        [_pRecordButton setImage:[UIImage imageNamed:@"record_off.png"] forState:UIControlStateNormal];
     }
 }
 
