@@ -8,7 +8,7 @@
 
 #import "MeterGaugeView.h"
 
-#define GUAGE_WIDTH 70 // 계기침 길이
+#define GAUGE_WIDTH 70 // 계기침 길이
 #define LINE_WIDTH 3 // 계기침 폭
 #define STARTANGLE 225 // 오디오 최저 레벨일떄 계기침 각도
 #define ENDANGLE 135 // 오디오 최고 레벨일떄 계기침 각도
@@ -42,9 +42,10 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
+    // !!!:바늘이 표시 되지 않으면 이 함수를 잘 살펴본다.
     // Drawing code
     int startX = self.bounds.size.width / 2; // 계기침 시작 중심 X좌표
-    int startY = self.bounds.size.height / 2; // 계기침 시작 중심 Y좌표
+    int startY = self.bounds.size.height / 2 + 20; // 계기침 시작 중심 Y좌표
     int newX, newY; // 계기침 삼각형의 꼭지점 x, Y좌표
     int newStartX1, newStartX2; // 계기 침 삼각형 좌/우 점의 X좌표
     int newStartY1, newStartY2; // 계기 침 삼각형 좌/우 점의 Y좌표
@@ -54,30 +55,36 @@
     [self drawGaugeBitmap:context];
     
     if (value >= 0.5) {
-        newValue = ENDANGLE * 2 * (value -0.5); // 삼각형 계기침의 좌표를 계산합니다.
+        newValue = ENDANGLE * 2 * (value - 0.5); // 삼각형 계기침의 좌표를 계산합니다.
     }
     else {
         newValue = STARTANGLE + (360 - STARTANGLE) * 2 * value;
     }
     
-    if (newValue - 90 >= 0)
-        newValue1 = newValue * 90;
-    else
+    if (newValue - 90 >= 0) {
+        newValue1 = newValue - 90;
+    }
+    else {
         newValue1 = newValue - 90 + 360;
+    }
     
-    if (newValue + 90 <= 360)
+    if (newValue + 90 <= 360) {
         newValue2 = newValue + 90;
-    else
+    }
+    else {
         newValue2 = newValue + 90 - 360;
+    }
     
-    newX = (int)(sin(newValue * 3.14/180) * GUAGE_WIDTH + startX);
+    newX = (int)(sin(newValue * 3.14/180) * GAUGE_WIDTH + startX);
+    newStartX1 = (int)(startY - (cos(newValue1 * 3.14/180) * LINE_WIDTH));
+    newStartX2 = (int)(startY - (cos(newValue2 * 3.14/180) * LINE_WIDTH));
+    
+    newY = (int)(startY - (cos(newValue * 3.14/180) * GAUGE_WIDTH));
     newStartY1 = (int)(startY - (cos(newValue1 * 3.14/180) * LINE_WIDTH));
     newStartY2 = (int)(startY - (cos(newValue2 * 3.14/180) * LINE_WIDTH));
     
     // 삼각형 계기 침을 그립니다.
-    
     CGContextSetRGBFillColor(context, 1.0, 0, 0, 1.0);
-    CGContextSetRGBStrokeColor(context, 1.0, 0, 0, 1.0);
     CGContextMoveToPoint(context, newStartX1, newStartY1);
     CGContextAddLineToPoint(context, newStartX2, newStartY2);
     CGContextAddLineToPoint(context, newX, newY);
@@ -90,10 +97,12 @@
 {
 // CTM이전 상태를 저장
     CGContextSaveGState(context);
+
     CGContextTranslateCTM(context, 0.0, self.bounds.size.height);
     CGContextScaleCTM(context, 1.0, -1.0);
     CGContextClipToRect(context, CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height));
     CGContextDrawImage(context, CGRectMake(0, 0, CGImageGetWidth(_imgGauge), CGImageGetHeight(_imgGauge)), _imgGauge);
+    
     CGContextRestoreGState(context);
 }
 
