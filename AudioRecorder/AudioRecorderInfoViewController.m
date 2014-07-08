@@ -6,13 +6,13 @@
 //  Copyright (c) 2014년 Kevin. All rights reserved.
 //
 
-#import "AudioRecorderInfo.h"
+#import "AudioRecorderInfoViewController.h"
 
-@interface AudioRecorderInfo ()
+@interface AudioRecorderInfoViewController ()
 
 @end
 
-@implementation AudioRecorderInfo
+@implementation AudioRecorderInfoViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

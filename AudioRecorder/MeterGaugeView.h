@@ -15,6 +15,6 @@
 }
 
 - (void)drawGaugeBitmap:(CGContextRef)context;
-@property double value;
+@property (nonatomic, assign) double value;
 
 @end

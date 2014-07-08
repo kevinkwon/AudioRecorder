@@ -6,8 +6,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordViewController">
             <connections>
+                <outlet property="_gaugeView" destination="IEF-mp-jGg" id="CNm-NN-7dH"/>
                 <outlet property="_listButton" destination="DhY-9u-ReF" id="HIe-qo-dxd"/>
-                <outlet property="_pGaugeView" destination="IEF-mp-jGg" id="78J-1I-bv1"/>
                 <outlet property="_pRecordButton" destination="oVa-ai-HSc" id="HWQ-9N-fl1"/>
                 <outlet property="_recordTimeDisplay" destination="3tv-dI-VF9" id="4JO-CG-OgP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -44,8 +44,12 @@
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
-                        <barButtonItem width="258" style="plain" systemItem="fixedSpace" id="2uA-iA-Fuu"/>
-                        <barButtonItem title="Item" id="DhY-9u-ReF"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="B1r-Fi-vZE"/>
+                        <barButtonItem title="Show List" id="DhY-9u-ReF">
+                            <connections>
+                                <action selector="audioListButtonPressed:" destination="-2" id="xdX-T5-PPY"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>

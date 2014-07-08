@@ -60,41 +60,62 @@
 
 #pragma mark - Public Methods
 // infoButton 눌렸을때
-- (IBAction)recordInfoClick:(id)sender
+- (IBAction)infoButtonPressed:(id)sender
 {
     // audioRecorderInfo 가 nil이면 초기화 시켜준다.
     // 미리 생성하지 않고 필요할때 생성하는 이유는 메모리 관리를 위해서 그렇게 한다.
-    if (_audioRecorderInfo == nil) {
-        AudioRecorderInfo *viewController = [[AudioRecorderInfo alloc] initWithNibName:@"AudioRecorderInfo" bundle:nil];
-        self.audioRecorderInfo = viewController;
+    if (_audioRecorderInfoViewController == nil) {
+        AudioRecorderInfoViewController *target = [[AudioRecorderInfoViewController alloc] initWithNibName:@"AudioRecorderInfoViewController" bundle:nil];
+        self.audioRecorderInfoViewController = target;
         
         // ARC프로젝트이므로 release는 하지 않습니다.
         // [viewController release];
     }
     
-    UIView *recordView = _recordListViewController.view; // 녹음 리스트 뷰를 지역변수로 선언
-    UIView *audioRecorderInfoView = _audioRecorderInfo.view; // 녹음기 앱정보 뷰를 지역변수로 선언
-    
+    UIView *recordView = _recordViewController.view; // 녹음 리스트 뷰를 지역변수로 선언
+    UIView *audioRecorderInfoView = _audioRecorderInfoViewController.view; // 녹음기 앱정보 뷰를 지역변수로 선언
+
     // 화면전환 시작
     [UIView beginAnimations:nil context:NULL]; // 애니메이션 정의 시작
     [UIView setAnimationDuration:1.0];
-    [UIView setAnimationTransition:recordView.subviews?UIViewAnimationTransitionFlipFromRight:UIViewAnimationTransitionFlipFromLeft
+    [UIView setAnimationTransition:recordView.superview?UIViewAnimationTransitionFlipFromRight:UIViewAnimationTransitionFlipFromLeft
                            forView:self.view
                              cache:YES]; // 화면전환 효과 설정
     
     // 슈퍼뷰에서 제거하여 더이상 화면에 나타나지 않게 합니다.
     if (recordView.superview != nil) {
         [recordView removeFromSuperview];
-        [self.view addSubview:audioRecorderInfoView];
+        [self.view insertSubview:audioRecorderInfoView belowSubview:_infoButton]; // 책처럼 [self.view addSubview:audioRecorderInfoView]; 를 사용하면 infoButton을 가리기때문에, infoButton 아래로 insert해준다.
     }
     else {
         [audioRecorderInfoView removeFromSuperview];
         [self.view insertSubview:recordView belowSubview:_infoButton];
     }
     [UIView commitAnimations]; // 에니메이션 종료
+    
+//    // 애니메이션을 블록코딩으로 재생한다면
+//    [UIView animateWithDuration:5.0
+//                          delay:0.0
+//                        options:UIViewAnimationOptionTransitionFlipFromLeft
+//                     animations:^{
+//                         if (recordView.superview != nil) {
+//                             [self.view insertSubview:audioRecorderInfoView belowSubview:_infoButton]; // 책처럼 [self.view addSubview:audioRecorderInfoView]; 를 사용하면 infoButton을 가리기때문에, infoButton 아래로 insert해준다.
+//                         }
+//                         else {
+//                             [self.view insertSubview:recordView belowSubview:_infoButton];
+//                         }
+//                     } completion:^(BOOL finished) {
+//                         if (recordView.superview != nil) {
+//                             [recordView removeFromSuperview];
+//                         }
+//                         else {
+//                             [audioRecorderInfoView removeFromSuperview];
+//                         }
+//
+//                     }];
 }
 
-- (IBAction)audioListClick:(id)sender
+- (IBAction)audioListButtonPressed:(id)sender
 {
     if (_recordListViewController == nil) {
         RecordListViewController *viewController = [[RecordListViewController alloc]initWithNibName:@"RecordListViewController" bundle:nil];
@@ -102,17 +123,17 @@
         // [viewController release];
     }
     
-    UIView *recordView = _recordListViewController.view; // 녹음 리스트 뷰를 지역변수로 선언
+    UIView *recordView = _recordViewController.view; // 녹음 리스트 뷰를 지역변수로 선언
     UIView *recordListView = _recordListViewController.view; // 녹음기 앱정보 뷰를 지역변수로 선언
 
     // 화면 전환 설정
     [UIView beginAnimations:nil context:NULL];
     [UIView setAnimationDuration:1.0];
-    [UIView setAnimationTransition:recordView.subviews?UIViewAnimationTransitionCurlUp:UIViewAnimationTransitionCurlDown
+    [UIView setAnimationTransition:recordView.superview?UIViewAnimationTransitionCurlUp:UIViewAnimationTransitionCurlDown
                            forView:self.view
                              cache:YES]; // 화면전환 효과 설정
     
-    if (recordView.superview != nil) {
+    if (recordView.superview) {
         [recordView removeFromSuperview];
         [self.view addSubview:recordListView];
         

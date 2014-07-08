@@ -62,9 +62,9 @@
     {
         if (self.pAudioRecorder.recording) { // 레코딩 중일 경우
             [self.pAudioRecorder stop]; // 녹음을 중지합니다.
-            _pGaugeView.value = 0;
+            _gaugeView.value = 0;
             [[NSFileManager defaultManager] removeItemAtPath:[self.pAudioRecorder.url path] error:nil];
-            [_pGaugeView setNeedsDisplay]; // 오디오 레벨을 표시하는 계시판을 다시 그립니다.
+            [_gaugeView setNeedsDisplay]; // 오디오 레벨을 표시하는 계시판을 다시 그립니다.
             return;
         }
         // [self.pAudioRecorder release];
@@ -125,7 +125,7 @@
 - (NSString *)getFileName
 {
     NSDateFormatter *fileNameFormat = [[NSDateFormatter alloc]init];
-    [fileNameFormat setDateFormat:@"yyyyMddHHmmss"];
+    [fileNameFormat setDateFormat:@"yyyyMMddHHmmss"];
     
     // 파일명을 구합니다.
     NSString *fileName = [[fileNameFormat stringFromDate:[NSDate date]] stringByAppendingString:@".aif"];
@@ -136,14 +136,15 @@
 - (void)timerFired
 {
     [self.pAudioRecorder updateMeters];
+    
     double peak = pow(10, (0.05 * [self.pAudioRecorder peakPowerForChannel:0]));
     _plowPassResults = 0.05 * peak + (1.0 - 0.05) * _plowPassResults;
     // 녹음된 사간을 화면에 갱신합니다.
     _recordTimeDisplay.text = [NSString stringWithFormat:@"%@", [self recordTime:self.pAudioRecorder.currentTime]];
     _pRecodingTime = self.pAudioRecorder.currentTime;
-    _pGaugeView.value = _plowPassResults;
+    _gaugeView.value = _plowPassResults;
     
-    [_pGaugeView setNeedsDisplay]; // 계기판을 갱신합니다.
+    [_gaugeView setNeedsDisplay]; // 계기판을 갱신합니다.
 }
 
 // 녹음된 시/분/초를 구합니다.
@@ -174,7 +175,7 @@
 - (void)toolbarRecordButtonToogle:(int)index
 {
     if (index == 0) {
-        [_pRecordButton setImage:[UIImage imageNamed:@"record_on.png"] forState:UIControlStateNormal];
+        [_pRecordButton setImage:[UIImage imageNamed:@"record_on"] forState:UIControlStateNormal];
     }
     else {
         [_pRecordButton setImage:[UIImage imageNamed:@"record_off.png"] forState:UIControlStateNormal];

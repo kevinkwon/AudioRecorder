@@ -28,8 +28,8 @@
 		4F5EABAB196398C40020E9C6 /* RecordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5EABA9196398C40020E9C6 /* RecordViewController.xib */; };
 		4F5EABAF196398D80020E9C6 /* RecordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5EABAD196398D80020E9C6 /* RecordListViewController.m */; };
 		4F5EABB0196398D80020E9C6 /* RecordListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5EABAE196398D80020E9C6 /* RecordListViewController.xib */; };
-		4F5EABB41963A0F80020E9C6 /* AudioRecorderInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5EABB21963A0F80020E9C6 /* AudioRecorderInfo.m */; };
-		4F5EABB51963A0F80020E9C6 /* AudioRecorderInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5EABB31963A0F80020E9C6 /* AudioRecorderInfo.xib */; };
+		4F5EABB41963A0F80020E9C6 /* AudioRecorderInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5EABB21963A0F80020E9C6 /* AudioRecorderInfoViewController.m */; };
+		4F5EABB51963A0F80020E9C6 /* AudioRecorderInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4F5EABB31963A0F80020E9C6 /* AudioRecorderInfoViewController.xib */; };
 		4F72221C19610BB700F10A28 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F72221B19610BB700F10A28 /* README.md */; };
 		4FEFF5621967024200363170 /* gauge.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF55F1967024200363170 /* gauge.png */; };
 		4FEFF5631967024200363170 /* record_off.png in Resources */ = {isa = PBXBuildFile; fileRef = 4FEFF5601967024200363170 /* record_off.png */; };
@@ -80,9 +80,9 @@
 		4F5EABAC196398D80020E9C6 /* RecordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordListViewController.h; sourceTree = "<group>"; };
 		4F5EABAD196398D80020E9C6 /* RecordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecordListViewController.m; sourceTree = "<group>"; };
 		4F5EABAE196398D80020E9C6 /* RecordListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecordListViewController.xib; sourceTree = "<group>"; };
-		4F5EABB11963A0F80020E9C6 /* AudioRecorderInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorderInfo.h; sourceTree = "<group>"; };
-		4F5EABB21963A0F80020E9C6 /* AudioRecorderInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorderInfo.m; sourceTree = "<group>"; };
-		4F5EABB31963A0F80020E9C6 /* AudioRecorderInfo.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioRecorderInfo.xib; sourceTree = "<group>"; };
+		4F5EABB11963A0F80020E9C6 /* AudioRecorderInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioRecorderInfoViewController.h; sourceTree = "<group>"; };
+		4F5EABB21963A0F80020E9C6 /* AudioRecorderInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioRecorderInfoViewController.m; sourceTree = "<group>"; };
+		4F5EABB31963A0F80020E9C6 /* AudioRecorderInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AudioRecorderInfoViewController.xib; sourceTree = "<group>"; };
 		4F72221B19610BB700F10A28 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		4FEFF55F1967024200363170 /* gauge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gauge.png; sourceTree = "<group>"; };
 		4FEFF5601967024200363170 /* record_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record_off.png; sourceTree = "<group>"; };
@@ -178,9 +178,9 @@
 				4F5EABAC196398D80020E9C6 /* RecordListViewController.h */,
 				4F5EABAD196398D80020E9C6 /* RecordListViewController.m */,
 				4F5EABAE196398D80020E9C6 /* RecordListViewController.xib */,
-				4F5EABB11963A0F80020E9C6 /* AudioRecorderInfo.h */,
-				4F5EABB21963A0F80020E9C6 /* AudioRecorderInfo.m */,
-				4F5EABB31963A0F80020E9C6 /* AudioRecorderInfo.xib */,
+				4F5EABB11963A0F80020E9C6 /* AudioRecorderInfoViewController.h */,
+				4F5EABB21963A0F80020E9C6 /* AudioRecorderInfoViewController.m */,
+				4F5EABB31963A0F80020E9C6 /* AudioRecorderInfoViewController.xib */,
 				4FEFF5651967034200363170 /* MeterGaugeView.h */,
 				4FEFF5661967034200363170 /* MeterGaugeView.m */,
 				4FEFF56A1967159500363170 /* RecordDataBase.h */,
@@ -307,7 +307,7 @@
 				4FEFF5631967024200363170 /* record_off.png in Resources */,
 				4F5EABB0196398D80020E9C6 /* RecordListViewController.xib in Resources */,
 				4FEFF5691967144300363170 /* RecordDB.sqlite in Resources */,
-				4F5EABB51963A0F80020E9C6 /* AudioRecorderInfo.xib in Resources */,
+				4F5EABB51963A0F80020E9C6 /* AudioRecorderInfoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -329,7 +329,7 @@
 				4FEFF5671967034200363170 /* MeterGaugeView.m in Sources */,
 				4F3D867E19610A0B001D8332 /* AppDelegate.m in Sources */,
 				4F3D867A19610A0B001D8332 /* main.m in Sources */,
-				4F5EABB41963A0F80020E9C6 /* AudioRecorderInfo.m in Sources */,
+				4F5EABB41963A0F80020E9C6 /* AudioRecorderInfoViewController.m in Sources */,
 				4F4C239E19638B070023C089 /* RootViewController.m in Sources */,
 				4F5EABAA196398C40020E9C6 /* RecordViewController.m in Sources */,
 				4F5EABAF196398D80020E9C6 /* RecordListViewController.m in Sources */,

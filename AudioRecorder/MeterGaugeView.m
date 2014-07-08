@@ -77,6 +77,7 @@
     // 삼각형 계기 침을 그립니다.
     
     CGContextSetRGBFillColor(context, 1.0, 0, 0, 1.0);
+    CGContextSetRGBStrokeColor(context, 1.0, 0, 0, 1.0);
     CGContextMoveToPoint(context, newStartX1, newStartY1);
     CGContextAddLineToPoint(context, newStartX2, newStartY2);
     CGContextAddLineToPoint(context, newX, newY);

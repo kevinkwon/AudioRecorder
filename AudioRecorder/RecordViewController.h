@@ -17,8 +17,9 @@
     AVAudioSession *_pAudioSession; // AVAudioSession 멤버 변수
     IBOutlet UIButton *_pRecordButton; // 녹음 제어 버튼에 대한 변수
     
+    // 녹음 시간을 화면에 표시하는 라벨에 대한 참조 변수
     IBOutlet UILabel *_recordTimeDisplay;
-    IBOutlet MeterGaugeView *_pGaugeView;
+    IBOutlet MeterGaugeView *_gaugeView;
     IBOutlet UIBarButtonItem *_listButton;
     
     NSTimer *_timer;

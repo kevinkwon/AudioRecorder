@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AudioRecorderInfo : UIViewController
+@interface AudioRecorderInfoViewController : UIViewController
 
 @end

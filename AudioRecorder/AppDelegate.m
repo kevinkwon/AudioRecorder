@@ -47,11 +47,12 @@
     NSString *documentDirectory = paths[0];
     
     NSString *myPath = [documentDirectory stringByAppendingPathComponent:@"RecordDB.sqlite"];
+    // /iphonesimulator/asdfasf/asdfasd/documents/RecordDB.sqlite
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
     BOOL exist = [fileManager fileExistsAtPath:myPath]; // 파일이 존재하는지 체크
     
-    if (exist) {
+    if (exist == YES) {
         NSLog(@"DB가 존재합니다.");
         return YES;
     }

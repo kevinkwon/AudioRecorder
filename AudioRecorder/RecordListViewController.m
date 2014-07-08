@@ -49,10 +49,10 @@
 }
 
 #pragma mark - UITableView Delegate Method
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    return 1;
+//}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -68,6 +68,7 @@
     if (!cell) {
         NSArray *arr = [[NSBundle mainBundle] loadNibNamed:@"UIMemoListCell" owner:nil options:nil];
         cell = [arr objectAtIndex:0];
+        
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;

@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RootViewController">
             <connections>
-                <outlet property="infoButton" destination="zXO-vP-vtk" id="Hkn-1s-d4E"/>
+                <outlet property="infoButton" destination="zXO-vP-vtk" id="9bM-y8-W6b"/>
                 <outlet property="view" destination="iN0-l3-epB" id="E7G-eZ-hax"/>
             </connections>
         </placeholder>
@@ -22,7 +22,7 @@
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
-                        <action selector="recordInfoClick:" destination="-1" eventType="touchUpInside" id="01j-Kc-eXR"/>
+                        <action selector="infoButtonPressed:" destination="-1" eventType="touchUpInside" id="DdL-oj-wXk"/>
                     </connections>
                 </button>
             </subviews>
