@@ -28,9 +28,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    [self SetAudioSession]; // 오디오 동작 설명
+    [self setAudioSession]; // 오디오 동작 설명
     [_recordTimeDisplay setFont:[UIFont fontWithName:@"DBLCDTempBlack" size:40.0]]; // 폰트 설정
-    _pDataBase = [[RecordDataBase alloc] init]; // 디비 초기화
+    _dataBase = [[RecordDataBase alloc] init]; // 디비 초기화
+    
+    // 레코드 시간 화면부분을 초기화 한다. 이부분은 IB ATTRIBUTE에서도 설정이 가능하다.
+    _recordTimeDisplay.text = @"00:00:00"; // 레코드 시간 초기화
+    _recordTimeDisplay.textAlignment = NSTextAlignmentCenter; // 가운데 정렬
+    _recordTimeDisplay.font = [UIFont systemFontOfSize:64]; // 레코드 타임 폰트 설정
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,36 +45,37 @@
 }
 
 #pragma mark - 추가된 함수
-- (BOOL)SetAudioSession
+- (BOOL)setAudioSession
 {
-    self.pAudioSession = [AVAudioSession sharedInstance];
+    self.audioSession = [AVAudioSession sharedInstance];
     
     // 오디오 카테고리를 설정합니다.
-    if (![self.pAudioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil]) {
+    if (![self.audioSession setCategory:AVAudioSessionCategoryPlayAndRecord error:nil]) {
         return NO;
     }
     // 오디오 세션이 활성화 됩니다.
-    if (![self.pAudioSession setActive:YES error:nil]) {
+    if (![self.audioSession setActive:YES error:nil]) {
         return NO;
     }
     
-    return self.pAudioSession.inputIsAvailable;
+//    return self.audioSession.inputIsAvailable; deprecate 되었기 때문에 아래 함수를 사용한다.
+    return self.audioSession.inputAvailable;
 }
 
 - (IBAction)audioRecordingClick:(id)sender
 {
-    if (self.pAudioRecorder != nil)
+    if (self.audioRecorder != nil)
     {
-        if (self.pAudioRecorder.recording) { // 레코딩 중일 경우
-            [self.pAudioRecorder stop]; // 녹음을 중지합니다.
+        if (self.audioRecorder.recording) { // 레코딩 중일 경우
+            [self.audioRecorder stop]; // 녹음을 중지합니다.
             _gaugeView.value = 0;
-            [[NSFileManager defaultManager] removeItemAtPath:[self.pAudioRecorder.url path] error:nil];
+            [[NSFileManager defaultManager] removeItemAtPath:[self.audioRecorder.url path] error:nil];
             [_gaugeView setNeedsDisplay]; // 오디오 레벨을 표시하는 계시판을 다시 그립니다.
             return;
         }
         // [self.pAudioRecorder release];
     }
-    if ([self AudioRecordingStart]) // 녹음을 시작합니다.
+    if ([self audioRecordingStart]) // 녹음을 시작합니다.
     {
         [self toolbarRecordButtonToogle:1];
         _timer = [NSTimer scheduledTimerWithTimeInterval:0.03f target:self selector:@selector(timerFired) userInfo:nil repeats:YES]; // 타이머를 설정합니다.
@@ -77,7 +83,7 @@
 }
 
 // 녹음을 시작합니다.
-- (BOOL)AudioRecordingStart
+- (BOOL)audioRecordingStart
 {
     // 녹음을 위한 설정
     NSMutableDictionary *AudioSetting = [NSMutableDictionary dictionary];
@@ -91,20 +97,20 @@
     NSURL *url = [self getAudioFilePath];
     
     // AVAudioRecorder 객체 생성
-    self.pAudioRecorder = [[AVAudioRecorder alloc]initWithURL:url settings:AudioSetting error:nil];
+    self.audioRecorder = [[AVAudioRecorder alloc]initWithURL:url settings:AudioSetting error:nil];
     
-    if (!self.pAudioRecorder)
+    if (!self.audioRecorder)
         return NO;
     
-    self.pAudioRecorder.meteringEnabled = YES; // 모니터링 여부를 설정
-    self.pAudioRecorder.delegate = self;
+    self.audioRecorder.meteringEnabled = YES; // 모니터링 여부를 설정
+    self.audioRecorder.delegate = self;
     
-    if (![self.pAudioRecorder prepareToRecord]) // 녹음 준비 여부 확인
+    if (![self.audioRecorder prepareToRecord]) // 녹음 준비 여부 확인
     {
      return NO;
     }
     
-    if (![self.pAudioRecorder record]) // 녹음 시작
+    if (![self.audioRecorder record]) // 녹음 시작
     {
      return NO;
     }
@@ -135,14 +141,14 @@
 
 - (void)timerFired
 {
-    [self.pAudioRecorder updateMeters];
+    [self.audioRecorder updateMeters];
     
-    double peak = pow(10, (0.05 * [self.pAudioRecorder peakPowerForChannel:0]));
-    _plowPassResults = 0.05 * peak + (1.0 - 0.05) * _plowPassResults;
+    double peak = pow(10, (0.05 * [self.audioRecorder peakPowerForChannel:0]));
+    _lowPassResults = 0.05 * peak + (1.0 - 0.05) * _lowPassResults;
     // 녹음된 사간을 화면에 갱신합니다.
-    _recordTimeDisplay.text = [NSString stringWithFormat:@"%@", [self recordTime:self.pAudioRecorder.currentTime]];
-    _pRecodingTime = self.pAudioRecorder.currentTime;
-    _gaugeView.value = _plowPassResults;
+    _recordTimeDisplay.text = [NSString stringWithFormat:@"%@", [self recordTime:self.audioRecorder.currentTime]];
+    _recodingTime = self.audioRecorder.currentTime;
+    _gaugeView.value = _lowPassResults;
     
     [_gaugeView setNeedsDisplay]; // 계기판을 갱신합니다.
 }
@@ -161,10 +167,10 @@
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
 {
     // 데이터 베이스 저장
-    _pRecordSeq = [[recorder.url.path substringFromIndex:[recorder.url.path length] - 18] substringToIndex:14];
-    _pRecordFileName = recorder.url.path;
+    _recordSeq = [[recorder.url.path substringFromIndex:[recorder.url.path length] - 18] substringToIndex:14];
+    _recordFileName = recorder.url.path;
     
-    [_pDataBase insertRecordData:_pRecordSeq RecordingTM:_pRecodingTime RecordFileNM:_pRecordFileName];
+    [_dataBase insertRecordData:_recordSeq RecordingTM:_recodingTime RecordFileNM:_recordFileName];
     [self toolbarRecordButtonToogle:0];
     
     [_timer invalidate];
@@ -175,10 +181,10 @@
 - (void)toolbarRecordButtonToogle:(int)index
 {
     if (index == 0) {
-        [_pRecordButton setImage:[UIImage imageNamed:@"record_on"] forState:UIControlStateNormal];
+        [_recordButton setImage:[UIImage imageNamed:@"record_on"] forState:UIControlStateNormal];
     }
     else {
-        [_pRecordButton setImage:[UIImage imageNamed:@"record_off.png"] forState:UIControlStateNormal];
+        [_recordButton setImage:[UIImage imageNamed:@"record_off.png"] forState:UIControlStateNormal];
     }
 }
 

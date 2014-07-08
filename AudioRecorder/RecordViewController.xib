@@ -8,7 +8,7 @@
             <connections>
                 <outlet property="_gaugeView" destination="IEF-mp-jGg" id="CNm-NN-7dH"/>
                 <outlet property="_listButton" destination="DhY-9u-ReF" id="HIe-qo-dxd"/>
-                <outlet property="_pRecordButton" destination="oVa-ai-HSc" id="HWQ-9N-fl1"/>
+                <outlet property="_recordButton" destination="oVa-ai-HSc" id="f2a-s1-YIT"/>
                 <outlet property="_recordTimeDisplay" destination="3tv-dI-VF9" id="4JO-CG-OgP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
