@@ -14,12 +14,15 @@
 @interface RecordListViewController : UIViewController <AVAudioPlayerDelegate, MFMailComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     RecordDataBase *_pDataBase;
+    
     IBOutlet UITableView *_pListView;
     IBOutlet UIBarButtonItem *_playerButton; // 듣기 버튼
     AVAudioPlayer *_pAudioPlayer;
 }
 
-- (void)ReloadRecordList;
+- (void)reloadRecordList;
 
+// 소스에 없어서 추가한것들
+//- (void)
 
 @end

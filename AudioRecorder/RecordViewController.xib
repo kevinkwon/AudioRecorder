@@ -33,7 +33,7 @@
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oVa-ai-HSc">
                     <rect key="frame" x="124" y="346" width="64" height="64"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <state key="normal" image="record_off.png">
+                    <state key="normal" image="record_on.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -59,6 +59,6 @@
         </view>
     </objects>
     <resources>
-        <image name="record_off.png" width="128" height="128"/>
+        <image name="record_on.png" width="128" height="128"/>
     </resources>
 </document>

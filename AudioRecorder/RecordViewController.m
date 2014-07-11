@@ -178,6 +178,7 @@
 #pragma mark - AVAudioRecorder Delegate Method
 - (void)audioRecorderDidFinishRecording:(AVAudioRecorder *)recorder successfully:(BOOL)flag
 {
+    NSLog(@"오디로 레코딩이 중지됨");
     // 데이터 베이스 저장
     _recordSeq = [[recorder.url.path substringFromIndex:[recorder.url.path length] - 18] substringToIndex:14];
     _recordFileName = recorder.url.path;

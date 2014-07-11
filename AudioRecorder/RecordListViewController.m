@@ -42,17 +42,17 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)ReloadRecordList
+- (void)reloadRecordList
 {
     [_pDataBase getRecordList]; // 데이터베이스 조회
     [_pListView reloadData]; // 테이블뷰 새로 고침
 }
 
 #pragma mark - UITableView Delegate Method
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-//{
-//    return 1;
-//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -68,7 +68,12 @@
     if (!cell) {
         NSArray *arr = [[NSBundle mainBundle] loadNibNamed:@"UIMemoListCell" owner:nil options:nil];
         cell = [arr objectAtIndex:0];
-        
+        // 또는
+//        for (id object in arr) {
+//            if ([object isKindOfClass:[UIMemoListCell class]]) {
+//                cell = (UIMemoListCell *)object;
+//            }
+//        }
     }
     
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
