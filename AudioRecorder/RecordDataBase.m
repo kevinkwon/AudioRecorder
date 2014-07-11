@@ -12,7 +12,7 @@
 
 - (void)DataBaseConnection:(sqlite3 **)tempDataBase // 데이터 베이스 연결
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES); // Documents폴더 위치를 구합니다.
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); // Documents폴더 위치를 구합니다.
     NSString *documentDirectory = [paths objectAtIndex:0];
     NSString *myPath = [documentDirectory stringByAppendingPathComponent:@"RecordDB.sqlite"];
     

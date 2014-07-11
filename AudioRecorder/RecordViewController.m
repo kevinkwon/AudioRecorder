@@ -64,16 +64,19 @@
 
 - (IBAction)audioRecordingClick:(id)sender
 {
+    // audioRecorder 객체가 있는지 확인
     if (self.audioRecorder != nil)
     {
+        NSLog(@"녹음을 종료합니다.");
         if (self.audioRecorder.recording) { // 레코딩 중일 경우
-            [self.audioRecorder stop]; // 녹음을 중지합니다.
+            [self.audioRecorder stop];      // 녹음을 중지합니다.
             _gaugeView.value = 0;
             [[NSFileManager defaultManager] removeItemAtPath:[self.audioRecorder.url path] error:nil];
+             NSLog(@"녹음을 파일을 삭제합니다.");
             [_gaugeView setNeedsDisplay]; // 오디오 레벨을 표시하는 계시판을 다시 그립니다.
             return;
         }
-        // [self.pAudioRecorder release];
+        // [self.adioRecorder release];
     }
     if ([self audioRecordingStart]) // 녹음을 시작합니다.
     {
@@ -85,34 +88,43 @@
 // 녹음을 시작합니다.
 - (BOOL)audioRecordingStart
 {
+    NSError *error = nil;
+    NSLog(@"녹음을 시작합니다.");
     // 녹음을 위한 설정
     NSMutableDictionary *AudioSetting = [NSMutableDictionary dictionary];
     [AudioSetting setValue:[NSNumber numberWithInt:kAudioFormatLinearPCM] forKeyPath:AVFormatIDKey];
-    [AudioSetting setValue:[NSNumber numberWithFloat:11025] forKeyPath:AVSampleRateKey];
-    [AudioSetting setValue:[NSNumber numberWithInt:1] forKeyPath:AVNumberOfChannelsKey];
+    [AudioSetting setValue:[NSNumber numberWithFloat:44100.0] forKeyPath:AVSampleRateKey];
+    [AudioSetting setValue:[NSNumber numberWithInt:2] forKeyPath:AVNumberOfChannelsKey];
     [AudioSetting setValue:[NSNumber numberWithInt:16] forKeyPath:AVLinearPCMBitDepthKey];
     [AudioSetting setValue:[NSNumber numberWithBool:NO] forKeyPath:AVLinearPCMIsBigEndianKey];
     [AudioSetting setValue:[NSNumber numberWithBool:NO] forKeyPath:AVLinearPCMIsFloatKey];
     //  녹음된 오디오가 저장된 파일의 NSURL
     NSURL *url = [self getAudioFilePath];
+    NSLog(@"녹음이 저장된 오디오파일의 경로는 %@", url.absoluteString);
     
     // AVAudioRecorder 객체 생성
-    self.audioRecorder = [[AVAudioRecorder alloc]initWithURL:url settings:AudioSetting error:nil];
+    NSLog(@"오디오 레코드 객체를 초기화");
+    self.audioRecorder = [[AVAudioRecorder alloc]initWithURL:url settings:AudioSetting error:&error];
     
-    if (!self.audioRecorder)
+    if (!self.audioRecorder) {
+        NSLog(@"오디오 레코드 생성에 실패했습니다.");
         return NO;
+    }
     
-    self.audioRecorder.meteringEnabled = YES; // 모니터링 여부를 설정
     self.audioRecorder.delegate = self;
+    self.audioRecorder.meteringEnabled = YES; // 모니터링 여부를 설정
     
     if (![self.audioRecorder prepareToRecord]) // 녹음 준비 여부 확인
     {
-     return NO;
+
+        NSLog(@"녹음시작 준비 실패 종료 : %@ %d %@", error.domain, error.code, error.userInfo);
+        return NO;
     }
     
     if (![self.audioRecorder record]) // 녹음 시작
     {
-     return NO;
+        NSLog(@"녹음시작 실패 종료");
+        return NO;
     }
     
     return YES;
@@ -120,7 +132,7 @@
 
 - (NSURL *)getAudioFilePath
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES);
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentDirectory = [paths objectAtIndex:0];
     
     // 파일명을 구하고 파일결로를 합친후 NSURL객체로 변환합니다.

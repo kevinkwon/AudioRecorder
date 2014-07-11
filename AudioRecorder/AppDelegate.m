@@ -43,7 +43,7 @@
 
 - (BOOL)copyOfDataBaseIfNeeded
 {
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentationDirectory, NSUserDomainMask, YES); // Documents 폴더 위치를 구한다.
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); // Documents 폴더 위치를 구한다.
     NSString *documentDirectory = paths[0];
     
     NSString *myPath = [documentDirectory stringByAppendingPathComponent:@"RecordDB.sqlite"];
