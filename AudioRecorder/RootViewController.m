@@ -125,6 +125,9 @@
     
     UIView *recordView = _recordViewController.view; // 녹음 리스트 뷰를 지역변수로 선언
     UIView *recordListView = _recordListViewController.view; // 녹음기 앱정보 뷰를 지역변수로 선언
+    NSLog(@"recordView size : %@", NSStringFromCGRect(recordView.frame));
+    NSLog(@"recordListView size : %@", NSStringFromCGRect(recordListView.frame));
+    recordListView.frame = self.view.frame;
 
     // 화면 전환 설정
     [UIView beginAnimations:nil context:NULL];

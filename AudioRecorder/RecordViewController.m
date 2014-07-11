@@ -71,12 +71,12 @@
         if (self.audioRecorder.recording) { // 레코딩 중일 경우
             [self.audioRecorder stop];      // 녹음을 중지합니다.
             _gaugeView.value = 0;
-            [[NSFileManager defaultManager] removeItemAtPath:[self.audioRecorder.url path] error:nil];
-             NSLog(@"녹음을 파일을 삭제합니다.");
             [_gaugeView setNeedsDisplay]; // 오디오 레벨을 표시하는 계시판을 다시 그립니다.
             return;
         }
         // [self.adioRecorder release];
+        [[NSFileManager defaultManager] removeItemAtPath:[self.audioRecorder.url path] error:nil];
+        NSLog(@"녹음을 파일을 삭제합니다.");
     }
     if ([self audioRecordingStart]) // 녹음을 시작합니다.
     {

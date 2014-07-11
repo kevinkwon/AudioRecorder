@@ -36,6 +36,14 @@
     
 }
 
+// 데이터를 로드 하는 부분을 추가한다.
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self reloadRecordList];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -114,20 +122,28 @@
 #pragma mark - AVAudioPlayer Delegate Methods
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
+    NSLog(@"재생이 끝남");
+//    [self.pAudioPlayer release];
+    _pAudioPlayer = nil;
     _playerButton.title = @"듣기";
 }
 
 - (IBAction)AudioPlayingClick:(id)sender
 {
+    NSLog(@"듣기 버튼 눌림");
     int index = (int)[[_pListView indexPathForSelectedRow] row];
+    
     if (_pDataBase.memoListArray.count == 0) {
+        NSLog(@"들을 수 있는 목록이 없으므로 리턴");
         return;
     }
     
     NSString *pRecordFileName = [[_pDataBase.memoListArray objectAtIndex:index] objectForKey:@"RecordFileNM"];
+    NSLog(@"들을려는 파일이름 : %@", pRecordFileName);
     
     if (_pAudioPlayer == nil || !_pAudioPlayer.playing)
     {
+        NSLog(@"오디오 플레이어가 없거나, 있지만 듣는 중이 아닌경우는 준비하고 실행한다.");
         _pAudioPlayer = [[AVAudioPlayer alloc]initWithContentsOfURL:[NSURL URLWithString:pRecordFileName] error:nil];
         _pAudioPlayer.delegate = self;
         [_pAudioPlayer prepareToPlay];
@@ -135,6 +151,7 @@
         _playerButton.title = @"멈춤";
     }
     else {
+        NSLog(@"듣는 중이라면, 플레이어를 정지하고, '듣기'로 버튼 타이틀을 바꾼다.");
         [_pAudioPlayer stop];
         _playerButton.title = @"듣기";
         //[pAudioPlayer release];

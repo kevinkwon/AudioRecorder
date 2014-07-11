@@ -7,6 +7,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RecordListViewController">
             <connections>
                 <outlet property="_pListView" destination="S0K-kQ-Osi" id="sgw-37-6MX"/>
+                <outlet property="_playerButton" destination="1at-s3-zKe" id="5vx-XR-9KI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,7 +16,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="S0K-kQ-Osi">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="S0K-kQ-Osi">
                     <rect key="frame" x="0.0" y="44" width="320" height="480"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -24,7 +25,7 @@
                         <outlet property="delegate" destination="-1" id="LV2-I7-86d"/>
                     </connections>
                 </tableView>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vyg-RK-IIL">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vyg-RK-IIL">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
@@ -36,18 +37,34 @@
                         </barButtonItem>
                     </items>
                 </toolbar>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-JG-ii7">
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5R9-JG-ii7">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <items>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Vfb-eV-jyk"/>
-                        <barButtonItem title="듣기" id="1at-s3-zKe"/>
-                        <barButtonItem width="85" style="plain" systemItem="fixedSpace" id="T0Y-js-y4Y"/>
                         <barButtonItem title="E-Mail" id="Ihc-Bw-QGK"/>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="JV9-XO-Gl7"/>
+                        <barButtonItem title="듣기" id="1at-s3-zKe">
+                            <connections>
+                                <action selector="AudioPlayingClick:" destination="-1" id="VXQ-QX-dbA"/>
+                            </connections>
+                        </barButtonItem>
                     </items>
                 </toolbar>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="S0K-kQ-Osi" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="4eN-bG-Spl"/>
+                <constraint firstAttribute="trailing" secondItem="5R9-JG-ii7" secondAttribute="trailing" id="9Qd-xC-uRr"/>
+                <constraint firstItem="5R9-JG-ii7" firstAttribute="top" secondItem="S0K-kQ-Osi" secondAttribute="bottom" id="Edi-HD-WCo"/>
+                <constraint firstItem="5R9-JG-ii7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="GG3-Wx-qVd"/>
+                <constraint firstItem="Vyg-RK-IIL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="GSi-ql-Ryf"/>
+                <constraint firstItem="S0K-kQ-Osi" firstAttribute="top" secondItem="Vyg-RK-IIL" secondAttribute="bottom" id="JYv-ar-1GK"/>
+                <constraint firstItem="5R9-JG-ii7" firstAttribute="top" secondItem="S0K-kQ-Osi" secondAttribute="bottom" id="KMa-6U-Y7i"/>
+                <constraint firstItem="Vyg-RK-IIL" firstAttribute="leading" secondItem="S0K-kQ-Osi" secondAttribute="leading" id="Vqf-MC-it1"/>
+                <constraint firstItem="Vyg-RK-IIL" firstAttribute="trailing" secondItem="S0K-kQ-Osi" secondAttribute="trailing" id="Yy1-qG-5RN"/>
+                <constraint firstAttribute="trailing" secondItem="S0K-kQ-Osi" secondAttribute="trailing" id="ew0-Nw-c6G"/>
+                <constraint firstAttribute="bottom" secondItem="5R9-JG-ii7" secondAttribute="bottom" id="nAJ-wZ-rbo"/>
+            </constraints>
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
         </view>
